@@ -1,0 +1,3 @@
+displayName = PlantsVS!
+author = MintCursor
+version = 0.1

@@ -1,0 +1,19 @@
+# This file will automatically update with entries for new content after a build and reload.
+# Please read https://github.com/tModLoader/tModLoader/wiki/Localization to learn more about localization and these files.
+
+Items: {
+	PeashooterItem: {
+		DisplayName: Peashooter Item
+		Tooltip: ""
+	}
+}
+
+Projectiles: {
+	Peashooter.DisplayName: Peashooter
+	CommonPea.DisplayName: Common Pea
+	PlaceCheck.DisplayName: Place Check
+	PlantPlaceCheck.DisplayName: Plant Place Check
+}
+
+DamageClasses.PlantClass.DisplayName: Plant Class
+UI.ExampleResource: Mods.PlantsVS.UI.ExampleResource

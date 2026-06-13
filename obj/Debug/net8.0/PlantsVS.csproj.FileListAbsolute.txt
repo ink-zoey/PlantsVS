@@ -1,0 +1,12 @@
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.csproj.AssemblyReference.cache
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.GeneratedMSBuildEditorConfig.editorconfig
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.AssemblyInfoInputs.cache
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.AssemblyInfo.cs
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.csproj.CoreCompileInputs.cache
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/bin/Debug/net8.0/PlantsVS.deps.json
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/bin/Debug/net8.0/PlantsVS.dll
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/bin/Debug/net8.0/PlantsVS.pdb
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.dll
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/refint/PlantsVS.dll
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/PlantsVS.pdb
+/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/obj/Debug/net8.0/ref/PlantsVS.dll

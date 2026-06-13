@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+IyR37iSvmtbIoEUSy47UoDHZqGjZmEpTm3yWcCxpZaOaFb9k8T/JMq8ITwH0tfvGvQ14sEaRuuwWJ9ehBcSFA==",
+  "success": true,
+  "projectFilePath": "/home/menta/.local/share/Terraria/tModLoader/ModSources/PlantsVS/PlantsVS.csproj",
+  "expectedPackageFiles": [
+    "/home/menta/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.27/microsoft.aspnetcore.app.ref.8.0.27.nupkg.sha512"
+  ],
+  "logs": []
+}
