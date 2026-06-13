@@ -1,18 +1,20 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PlantsVS.Common;
 using PlantsVS.Content.PVSystem;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace PlantsVS.Content.Plants.Base
 {
-
-	abstract public class BaseSummonItem : ModItem
+	public abstract class BaseSummonItem : ModItem
 	{
         public int SunCost;
 
@@ -100,56 +102,72 @@ namespace PlantsVS.Content.Plants.Base
 			return false;
 		}
 
-        public override void HoldItem(Player player)
+        private sealed class PlacementVisual : ModSystem
         {
-			if (Main.netMode != NetmodeID.Server && !PlayerHasProjectile(player.whoAmI, ModContent.ProjectileType<PlantPlaceCheck>()))
-			{
-				Main.NewText("New PlaceCheckDisplay created!");
-            	Projectile.NewProjectile(player.GetSource_FromThis(), PlantsVSCommon.PlantPlacePosition, Vector2.Zero, ModContent.ProjectileType<PlantPlaceCheck>(), 0, 0, Main.myPlayer);
-			}
-        }
+            private static readonly Asset<Texture2D> placementArea =
+                ModContent.Request<Texture2D>("PlantsVS/Content/Plants/Base/PlantPlaceCheck");
 
+            public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+            {
+                int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Tile Grid Option"));
+                if (mouseTextIndex == -1)
+                {
+                    return;
+                }
+
+                layers.Insert(
+                    mouseTextIndex,
+                    new LegacyGameInterfaceLayer(
+                        $"{nameof(PlantsVS)}: {nameof(PlacementVisual)}",
+                        () =>
+                        {
+                            if (Main.LocalPlayer.HeldItem.ModItem is BaseSummonItem)
+                            {
+                                DrawPlacementVisual(Main.spriteBatch);
+                            }
+                            return true;
+                        },
+                        InterfaceScaleType.None
+                    )
+                );
+
+                return;
+
+                static void DrawPlacementVisual(SpriteBatch sb)
+                {
+                    sb.End();
+                    sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                    {
+                        var drawPos = PlantsVSCommon.PlantPlacePositionWithoutScreen;
+                        drawPos -= Main.screenPosition;
+                        drawPos -= new Vector2(16);
+
+                        var blink = (float)Math.Abs(Math.Sin(Main.timeForVisualEffects / 50));
+                        var drawColor = Color.White * blink;
+
+                        var source = new Rectangle(
+                            0,
+                            (int)(24 * (Math.Round(Main.timeForVisualEffects / 15) % 4)),
+                            24,
+                            24
+                        );
+
+                        sb.Draw(
+                            placementArea.Value,
+                            drawPos,
+                            source,
+                            drawColor,
+                            0,
+                            Vector2.Zero,
+                            2f,
+                            SpriteEffects.None,
+                            0f
+                        );
+                    }
+                    sb.End();
+                    sb.Begin(); // Doesn't matter what's used here
+                }
+            }
+        }
     }
-
-    public class PlantPlaceCheck : ModProjectile {
-		public override void SetDefaults()
-        {
-			Projectile.hostile = false;
-            Projectile.friendly = false;
-            Projectile.scale = 2;
-        }
-
-		public override void AI() {
-			Player player = Main.player[Projectile.owner];
-			Projectile.Center = player.Center;
-
-			if (player.HeldItem.ModItem is not BaseSummonItem)
-			{
-				Main.NewText("Old PlaceCheckDisplay destroyed!");
-				Projectile.Kill();
-			}
-    	}
-
-		public Texture2D RequestTexture { get => TextureAssets.Projectile[Type].Value; }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            if (Main.gamePaused) { 
-				return false; 
-			} 
-
-			// Get position to draw selection
-			Vector2 DrawPos = PlantsVSCommon.PlantPlacePositionWithoutScreen - Main.screenPosition - new Vector2(16);
-
-			// Get color to draw selection
-			float Blink = (float)Math.Abs(Math.Sin(Main.timeForVisualEffects / 50));
-			Color DrawColor = new(Blink, Blink, Blink, Blink);
-
-			Rectangle TextureBounds = new(0, (int) (24 * (Math.Round(Main.timeForVisualEffects / 15) % 4)), 24, 24);
-
-			Main.EntitySpriteDraw(RequestTexture, DrawPos, TextureBounds, DrawColor,  0, Vector2.Zero, 2, SpriteEffects.None, 0f);
-
-			return false;
-        }
-	}
 }
